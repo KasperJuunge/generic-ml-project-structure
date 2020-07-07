@@ -1,0 +1,11 @@
+data/datasets/*
+!data/datasets/.gitkeep
+
+data/raw-data/*
+!data/raw-data/.gitkeep
+
+runs/*
+!runs/.gitkeep
+
+models/*
+!models/.gitkeep
