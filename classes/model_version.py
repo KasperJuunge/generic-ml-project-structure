@@ -25,28 +25,24 @@ class ModelVersion():
         
         self._snapshotAll()
         
-        
-    def _snapshot(self, path):
-        
+    def _snapshot(self, file_path, snapshot_path):
 
-        
-        if os.path.isfile(path):
-            
+        if os.path.isfile(file_path):
+
             # Read file
-            with open(path, 'r') as file:
+            with open(file_path, 'r') as file:
                 src = file.read()
-           
+
             # Save file
-            file_name = path.split('/')[-1]         
-            f = open(f'runs/{self.modelName}/src/{file_name}', 'w')
+            f = open(snapshot_path, 'w')
             f.write(src)
             f.close()
             return src
         else:
-            print(f'Trying to snapshot file, but can not find path: {path}')
+            print(f'Trying to snapshot file, but can not find path: {file_path}')
             return 
-        
-        
+
+    
     def _snapshotAll(self):
 
         cwd = os.getcwd()
@@ -59,14 +55,30 @@ class ModelVersion():
         
         if not os.path.isdir(f'{cwd}/runs/{self.modelName}/src'):
             os.mkdir(f'{cwd}/runs/{self.modelName}/src')
+
         
-        self.trainNotebook = self._snapshot(path=f'{cwd}/train.ipynb')
-        self.createDatasetNotebook = self._snapshot(path=f'{cwd}/data/datasets/{self.datasetName}/create_dataset.ipynb')
-        self.datasetClass = self._snapshot(path=f'{cwd}/classes/dataset.py')
-        self.earlyStopperClass = self._snapshot(path=f'{cwd}/classes/earlystopper.py')
-        self.modelClass = self._snapshot(path=f'{cwd}/classes/model.py')
-        self.modelVersionClass = self._snapshot(path=f'{cwd}/classes/model_version.py')
-        self.functions = self._snapshot(path=f'{cwd}/functions.py')
+        # Snapshot code
+        self.trainNotebook = self._snapshot(file_path='./train.ipynb', 
+                                            snapshot_path=f'./runs/{self.modelName}/src/train.ipynb')
+        
+        self.createDatasetNotebook = self._snapshot(file_path='./create_dataset.ipynb', 
+                                                    snapshot_path=f'./data/datasets/{self.datasetName}/create_dataset.ipynb')
+        
+        self.datasetClass = self._snapshot(file_path='./classes/dataset.py', 
+                                           snapshot_path=f'./runs/{self.modelName}/src/dataset.py')
+        
+        self.earlyStopperClass = self._snapshot(file_path='./classes/earlystopper.py', 
+                                                snapshot_path=f'./runs/{self.modelName}/src/earlystopper.py')
+        
+        self.modelClass = self._snapshot(file_path='./classes/model.py', 
+                                         snapshot_path=f'./runs/{self.modelName}/src/model.py')
+        
+        
+        self.modelVersionClass = self._snapshot(file_path='./classes/model_version.py', 
+                                                snapshot_path=f'./runs/{self.modelName}/src/model_version.py')
+        
+        self.functions = self._snapshot(file_path='./classes/functions.py', 
+                                        snapshot_path=f'./runs/{self.modelName}/src/functions.py')
 
         
     def report(self):
