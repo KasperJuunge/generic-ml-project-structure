@@ -1,11 +1,13 @@
-data/datasets/*
-!data/datasets/.gitkeep
+data/datasets/**/train
+data/datasets/**/val
+data/datasets/**/test
+data/datasets/**/labels.torch
 
-data/raw-data/*
-!data/raw-data/.gitkeep
+data/data-raw/*
+!data/data/raw-data/.gitkeep
 
-runs/*
+runs/**/state_dict.torch
 !runs/.gitkeep
 
-models/*
+models/**/state_dict.torch
 !models/.gitkeep
